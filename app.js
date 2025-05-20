@@ -1,24 +1,28 @@
-const http = require('http');
 const express = require('express'); //import express
 
 const app = express();
-app.use((req,res,next)=>{
-    console.log('Middleware 1');    
-    next();
-});
-app.use((req,res,next)=>{   //use is a middleware function--3 parameters--req,res,next
+
+app.use('/first',(req,res,next)=>{   //use is a middleware function--3 parameters--req,res,next
     //next is a function that will call the next middleware
-    console.log('Middleware 2');   
-    next();                 //way to next middleware
+    console.log('Middleware 1'); 
+    res.send('<h1>Hello from first middleware</h1>'); //send response to the client  
+    
+});
+app.use('/second',(req,res,next)=>{
+ console.log('Middleware 2'); //middleware function
+  res.send('<h1>Hello from first middleware</h1>'); //send response to the client
 });
 app.use((req,res,next)=>{
-    console.log('Middleware 3');    //expect response in last middleware
-    //send--res.send('Hello from express'); //send response
- res.send({test:"json"})
+ console.log('Common'); 
+  res.send('<h1>Common middleware</h1>'); //always works
 });
 
 
-const server = http.createServer(app);
-server.listen(8000);
+
+
+app.listen(8000)
+
 
 //Middle ware
+//handling different url
+//parsing data from
